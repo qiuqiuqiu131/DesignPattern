@@ -1,7 +1,9 @@
 package Application.IOC.Provider.ServiceAccessor;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 
+import Application.IOC.Dependence;
 import Application.IOC.Interface.IServiceAccessor;
 import Application.IOC.Interface.IServiceProvider;
 
@@ -50,12 +52,23 @@ public abstract class ServiceAccessorBase implements IServiceAccessor {
             parameters[i] = obj;
         }
 
+        Object result;
         try {
-            Object result = selectConstractor.newInstance(parameters);
-            return result;
+            result = selectConstractor.newInstance(parameters);
         } catch (Exception e) {
             throw new Exception(clazz.getName() + " constract default");
         }
+
+        // 注解注入
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Dependence.class)) {
+                field.setAccessible(true);
+                Object obj = serviceProvider.GetService(field.getType());
+                field.set(result, obj);
+            }
+        }
+        return result;
     }
 
     @Override

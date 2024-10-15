@@ -3,8 +3,13 @@ package View;
 import Application.ConsoleApplication.Annotation.ConsoleCommand;
 import Application.ConsoleApplication.ConsoleView.ConsoleViewBase;
 import Application.ConsoleApplication.Controller.ViewController.IViewController;
+import Application.IOC.Dependence;
+import Service.IMyService;
 
 public class HelloView extends ConsoleViewBase {
+
+    @Dependence
+    private IMyService myService;
 
     public HelloView(IViewController viewController) {
         super(viewController);
@@ -12,6 +17,7 @@ public class HelloView extends ConsoleViewBase {
 
     @Override
     protected String GetTitle() {
+        myService.Print();
         return "HelloView";
     }
 

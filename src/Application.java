@@ -2,7 +2,7 @@ import Application.ConsoleApplication.ConsoleApplication;
 import Application.IOC.Interface.IServiceCollection;
 import Service.IMyService;
 import Service.MyService;
-import View.HelloView;
+import View.MainView;
 
 public class Application extends ConsoleApplication {
 
@@ -17,6 +17,6 @@ public class Application extends ConsoleApplication {
 
     @Override
     protected Class<?> GetStartView() {
-        return HelloView.class;
+        return MainView.class;
     }
 }

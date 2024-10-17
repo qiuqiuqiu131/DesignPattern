@@ -71,12 +71,6 @@ public abstract class ConsoleViewBase implements IConsoleView {
 
     protected abstract String GetTitle();
 
-    @ConsoleCommand(Name = "Quit", Index = 101)
-    private String Quit() {
-        System.exit(0);
-        return null;
-    }
-
     @ConsoleCommand(Name = "Back", Index = 100)
     private String Back() {
         viewController.Pop();

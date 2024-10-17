@@ -7,7 +7,8 @@ public class IOController implements IIOController {
 
     public IOController Println(String text, PrintMethod method) {
         PrintMethod(method);
-        System.out.println(text);
+        System.out.format(text);
+        NewLine();
         return this;
     }
 
@@ -17,7 +18,7 @@ public class IOController implements IIOController {
 
     public IOController Print(String text, PrintMethod method) {
         PrintMethod(method);
-        System.out.print(text);
+        System.out.format(text);
         return this;
     }
 
@@ -37,10 +38,10 @@ public class IOController implements IIOController {
     private void PrintMethod(PrintMethod method) {
         switch (method) {
             case PrintMethod.Error:
-                System.out.print("Error: ");
+                System.out.format("\33[31;1mError: \33[0m");
                 break;
             case PrintMethod.Message:
-                System.out.print("Message: ");
+                System.out.format("\33[34;1mMessage: \33[0m");
             default:
                 break;
         }

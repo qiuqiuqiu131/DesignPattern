@@ -1,8 +1,7 @@
-import Application.ConsoleApplication.ConsoleApplication;
+import Program.Application;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ConsoleApplication app = new Application();
-        app.Start();
+        new Application();
     }
 }

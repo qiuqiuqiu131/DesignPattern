@@ -16,7 +16,7 @@ public class ConsoleApplicationExtension {
             for (File file : files) {
                 try {
                     String className = file.getName().replace(".class", "");
-                    Class<?> clazz = Class.forName(pack + "." + className);
+                    Class<?> clazz = Class.forName(pack.replace('/', '.') + "." + className);
                     if (IConsoleView.class.isAssignableFrom(clazz)) {
                         serviceCollection.RegisterTransient(clazz);
                     }

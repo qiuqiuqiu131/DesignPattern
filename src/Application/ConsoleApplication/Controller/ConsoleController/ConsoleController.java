@@ -35,7 +35,7 @@ public class ConsoleController implements IConsoleController {
     private void ExecuteCommand(IConsoleView view) throws Exception {
         int commandNum = view.CommandNum();
 
-        ioController.Print("CommandIndex:");
+        ioController.Print("\33[33;1mCommandIndex:\33[0m");
         int index;
         while (true) {
             try {
@@ -46,7 +46,7 @@ public class ConsoleController implements IConsoleController {
             } catch (NumberFormatException e) {
                 ioController.Println("Input Error!", PrintMethod.Error);
             }
-            ioController.Print("Input Again: ");
+            ioController.Print("\33[33;1mInput Again:\33[0m ");
         }
 
         String message = view.Execute(index);

@@ -24,6 +24,7 @@ public class ViewContorller implements IViewController {
         }
         if (ViewCollection.containsKey(view)) {
             ViewStack.push((IConsoleView) ViewCollection.get(view));
+            return;
         }
         Object obj = serviceProvider.GetService(view);
         ViewCollection.put(view, obj);

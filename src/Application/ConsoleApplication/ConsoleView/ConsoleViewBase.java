@@ -31,11 +31,11 @@ public abstract class ConsoleViewBase implements IConsoleView {
     public String View() {
         String newLine = System.lineSeparator();
         StringBuilder builder = new StringBuilder();
-        builder.append(String.format("[%s]", GetTitle()));
+        builder.append(String.format("\33[32;1m[%s]\33[0m", GetTitle()));
         int index = 1;
         for (String string : commandNames) {
             builder.append(newLine);
-            builder.append(String.format("%d. %s", index++, string));
+            builder.append(String.format("\33[36;1m%d.\33[0m %s", index++, string));
         }
         return builder.toString();
     }

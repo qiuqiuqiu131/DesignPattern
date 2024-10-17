@@ -29,7 +29,7 @@ public class ServiceProvider implements IServiceProvider, IServiceProviderExtens
 
         IServiceAccessor accessor = accessorFactory.CreateAccessor(clazz);
         if (accessor == null)
-            throw new Exception("This Service is not registered in Collection");
+            throw new Exception(clazz.getName() + " is not registered in Collection");
 
         serviceCollection.put(clazz, accessor);
         return (T) accessor.Resolve();

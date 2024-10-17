@@ -73,6 +73,10 @@ public abstract class ServiceAccessorBase implements IServiceAccessor {
 
     @Override
     public Object Resolve() throws Exception {
-        return ResolveObject();
+        try {
+            return ResolveObject();
+        } catch (Exception e) {
+            throw new Exception("Please Sure this dependence is Registered correctly");
+        }
     }
 }

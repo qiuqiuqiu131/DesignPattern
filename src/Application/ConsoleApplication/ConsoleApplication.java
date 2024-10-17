@@ -6,6 +6,8 @@ import Application.ConsoleApplication.Controller.IOController.IIOController;
 import Application.ConsoleApplication.Controller.IOController.IOController;
 import Application.ConsoleApplication.Controller.ViewController.IViewController;
 import Application.ConsoleApplication.Controller.ViewController.ViewContorller;
+import Application.Event.EventAggragator;
+import Application.Event.IEventAggragator;
 import Application.IOC.ServiceCollection;
 import Application.IOC.Interface.IServiceCollection;
 import Application.IOC.Interface.IServiceProvider;
@@ -20,15 +22,21 @@ public abstract class ConsoleApplication {
         serviceCollection.RegisterSingleton(IViewController.class, ViewContorller.class);
         serviceCollection.RegisterSingleton(IIOController.class, IOController.class);
         serviceCollection.RegisterSingleton(IConsoleController.class, ConsoleController.class);
-        ConsoleApplicationExtension.AddConsoleViews(serviceCollection, "View");
+        serviceCollection.RegisterSingleton(IEventAggragator.class, EventAggragator.class);
+        ConsoleApplicationExtension.AddConsoleViews(serviceCollection, "Program/View");
         RegisterService(serviceCollection);
-
         service = serviceCollection.BuildServiceProvider();
+
+        OnInitialize();
+        Start();
     }
 
-    public void Start() throws Exception {
+    private final void Start() throws Exception {
         IConsoleController consoleController = service.GetService(IConsoleController.class);
         consoleController.Run(GetStartView());
+    }
+
+    protected void OnInitialize() {
     }
 
     protected void RegisterService(IServiceCollection serviceCollection) throws Exception {

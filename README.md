@@ -128,7 +128,7 @@ public static Main()
 
 ## 三、ConsoleApplication
 
-### 1、控制器
+### 1、内置功能
 
 使用了 IOC 容器和 EventAggragator。
 
@@ -138,4 +138,79 @@ public static Main()
 
 提供了视图基类，项目中的视图需要继承 ConsoleViewBase。
 
+#### （1）、基类实现的界面的导航功能
+
+1. Translate("View1") 或者 Translate(View1.class),界面会转跳至 View1 界面。
+2. Back() 退出本界面
+
+#### （2）、添加视图功能
+
+使用注解 ConsoleCommand 添加，Name 为命令的名称，Index 为命令排序。
+
+```java
+@ConsoleCommand(Name = "View1", Index = 0)
+    public String View1() throws Exception {
+        return Translate("View1");
+    }
+```
+
+注：ConsoleApplaiction 会自动将"Program/View"下的继承自 ConsoleViewBase 的类注入到 IOC 容器中，不用手动注入。
+
 ### 3、如何使用
+
+1.  创建一个 Application 类，继承 ConsoleApplication，作为项目的启动配置项。
+2.  编写视图类，继承 ConsoleViewBase，实现抽象类的功能。要求放在"Program/View"文件夹下。
+
+    ```java
+        public class MainView extends ConsoleViewBase {
+        public MainView(IViewController viewController) {
+        super(viewController);
+        }
+
+            @Override
+            protected String GetTitle() {
+                return "Main View";
+            }
+
+            @ConsoleCommand(Name = "View1", Index = 0)
+            public String View1() throws Exception {
+                return Translate("View1");
+            }
+        }
+
+        public class View1 extends ConsoleViewBase {
+            public View1(IViewController viewController) {
+            }
+
+            @Override
+                protected String GetTitle() {
+                    return "View1";
+                }
+        }
+    ```
+
+    这里我们创建了两个视图类 MainView 和 View1，MainView 可以通过执行"View1"命令转跳到 View1 界面。
+
+3.  继续完善 Application 类
+
+    ```java
+        public class Application extends ConsoleApplication {
+
+            public Application() throws Exception {
+                super();
+            }
+
+            // 注册项目需要的服务
+            @Override
+            protected void RegisterService(IServiceCollection serviceCollection) throws Exception {
+            }
+
+            // 设置初始界面（这里设为MainView）
+            @Override
+            protected Class<?> GetStartView() {
+                return MainView.class;
+            }
+        }
+    ```
+
+4.  运行即可。

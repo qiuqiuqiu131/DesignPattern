@@ -24,9 +24,11 @@ public class ScopeServiceProvider implements IScopeServiceProvider {
             return (T) scopeServices.get(clazz);
 
         IServiceAccessor accessor = serviceProvider.GetServiceAccessor(clazz);
+        accessor.SetServiceProvider(this);
         Object res = accessor.Resolve();
-        if (accessor instanceof ScopeServiceAccessor)
+        if (accessor instanceof ScopeServiceAccessor) {
             scopeServices.put(clazz, res);
+        }
         return (T) res;
     }
 

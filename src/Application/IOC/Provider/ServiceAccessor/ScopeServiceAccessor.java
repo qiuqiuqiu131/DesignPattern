@@ -1,11 +1,9 @@
 package Application.IOC.Provider.ServiceAccessor;
 
-import Application.IOC.Interface.IServiceProvider;
-
 public class ScopeServiceAccessor extends ServiceAccessorBase {
 
-    public ScopeServiceAccessor(Class<?> clazz, IServiceProvider serviceProvider) {
-        super(clazz, serviceProvider);
+    public ScopeServiceAccessor(Class<?> clazz) {
+        super(clazz);
     }
 
     @Override
@@ -16,5 +14,4 @@ public class ScopeServiceAccessor extends ServiceAccessorBase {
             throw e;
         }
     }
-
 }

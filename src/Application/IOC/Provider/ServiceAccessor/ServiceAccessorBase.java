@@ -4,16 +4,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import Application.IOC.Dependence;
+import Application.IOC.Interface.IGetService;
 import Application.IOC.Interface.IServiceAccessor;
-import Application.IOC.Interface.IServiceProvider;
 
 public abstract class ServiceAccessorBase implements IServiceAccessor {
     protected Class<?> clazz;
-    protected IServiceProvider serviceProvider;
+    protected IGetService serviceProvider;
 
-    protected ServiceAccessorBase(Class<?> clazz, IServiceProvider serviceProvider) {
+    protected ServiceAccessorBase(Class<?> clazz) {
         this.clazz = clazz;
-        this.serviceProvider = serviceProvider;
     }
 
     protected abstract Object ResolveObject() throws Exception;
@@ -69,6 +68,10 @@ public abstract class ServiceAccessorBase implements IServiceAccessor {
             }
         }
         return result;
+    }
+
+    public void SetServiceProvider(IGetService getService) {
+        serviceProvider = getService;
     }
 
     @Override

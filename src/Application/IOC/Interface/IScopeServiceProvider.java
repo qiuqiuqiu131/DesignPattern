@@ -1,7 +1,5 @@
 package Application.IOC.Interface;
 
-public interface IScopeServiceProvider {
-    <T> T GetService(Class<T> clazz) throws Exception;
-
+public interface IScopeServiceProvider extends IGetService {
     void Dispose();
 }

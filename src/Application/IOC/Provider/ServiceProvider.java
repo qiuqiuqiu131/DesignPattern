@@ -15,7 +15,7 @@ public class ServiceProvider implements IServiceProvider, IServiceProviderExtens
     private AccessorFactory accessorFactory;
 
     public ServiceProvider(List<ServiceDescriptor> serviceCollection) {
-        accessorFactory = new AccessorFactory(serviceCollection, this);
+        accessorFactory = new AccessorFactory(serviceCollection);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,14 +24,18 @@ public class ServiceProvider implements IServiceProvider, IServiceProviderExtens
         if (clazz == IServiceProvider.class)
             return (T) this;
 
-        if (serviceCollection.containsKey(clazz))
-            return (T) serviceCollection.get(clazz).Resolve();
+        if (serviceCollection.containsKey(clazz)) {
+            var res = serviceCollection.get(clazz);
+            res.SetServiceProvider(this);
+            return (T) res.Resolve();
+        }
 
         IServiceAccessor accessor = accessorFactory.CreateAccessor(clazz);
         if (accessor == null)
             throw new Exception(clazz.getName() + " is not registered in Collection");
 
         serviceCollection.put(clazz, accessor);
+        accessor.SetServiceProvider(this);
         return (T) accessor.Resolve();
     }
 

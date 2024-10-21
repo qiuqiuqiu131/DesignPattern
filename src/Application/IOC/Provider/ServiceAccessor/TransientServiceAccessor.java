@@ -1,11 +1,9 @@
 package Application.IOC.Provider.ServiceAccessor;
 
-import Application.IOC.Interface.IServiceProvider;
-
 public class TransientServiceAccessor extends ServiceAccessorBase {
 
-    public TransientServiceAccessor(Class<?> clazz, IServiceProvider serviceProvider) {
-        super(clazz, serviceProvider);
+    public TransientServiceAccessor(Class<?> clazz) {
+        super(clazz);
     }
 
     @Override

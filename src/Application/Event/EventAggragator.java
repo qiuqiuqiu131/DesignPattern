@@ -8,6 +8,9 @@ public class EventAggragator implements IEventAggragator {
 
     private Map<Class<?>, IPubSubEmptyEvent> emptyEvents = new HashMap<>();
 
+    public EventAggragator() {
+    }
+
     @Override
     public <T extends IPubSubEvent<?>> T GetEvent(Class<T> clazz) {
         if (events.containsKey(clazz))

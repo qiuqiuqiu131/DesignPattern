@@ -8,6 +8,9 @@ public class PubSubEvent<T> implements IPubSubEvent<T> {
 
     private List<Consumer<T>> list = new LinkedList<>();
 
+    public PubSubEvent() {
+    }
+
     @Override
     public void Subscribe(Consumer<T> action) {
         list.add(action);

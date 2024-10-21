@@ -37,7 +37,39 @@ IMyService service1 = services.GetService(IMyService.class);
 MySingletonService service2 = services.GetService(MySingletonService.class);
 ```
 
-### 3、依赖注入的支持
+### 3、服务注册和生命周期
+
+该 Ioc 容器提供了三种方式注册和管理依赖。
+
+- Transient : 每次请求依赖，容器会创建新的实例。
+- Scope : 创建一个作用域，在次作用域内多次请求，均为同一实例。
+- Singleton : 整个程序的生命周期内，均为同一实例。
+
+```Java
+IServiceCollection builder = new ServiceCollection();
+
+builder.RegisterTransient(ITransient.class,Transient.class);
+builder.RegisterScope(IScope.class,Scope.class);
+builder.RegisterSingleton(ISingleton.class,Singleton.class);
+
+IServiceProvider services = builder.BuildServiceProvider();
+```
+
+特别的，Scope 需要创建一个作用域，需要使用 IServiceProvider。
+
+```Java
+try{
+    IScopeServiceProvider scope = services.CreateScope();
+    IScope m_service = scope.GetService(IScope.class);
+    // ToDo
+}
+finally{
+    // 离开作用域，销毁
+    scope.Dispose();
+}
+```
+
+### 4、依赖注入的支持
 
 #### （1）、构造函数注入
 
